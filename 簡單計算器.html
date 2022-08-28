@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>簡單計算器</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <p style="text-align:center;font-size:24px;color:red">簡單計算器</p>
+    <hr>
+<?php
+  $first = '';
+  $second = '';
+  $select = '0';
+  $result = '';
+  function caculate($start, $final, $sel) {
+    $sum = 0;
+    switch ($sel) {
+      case '0':
+        for ($i=$start; $i<=$final; $i++) {
+            $sum += $i;
+        }
+        return $sum;
+      case '1':
+        for ($i=$start; $i<=$final; $i++) {
+          if ($i % 2 == 1) {
+            $sum += $i;
+          }
+        }
+        return $sum;
+      case '2':
+        for ($i=$start; $i<=$final; $i++) {
+          if ($i % 2 == 0) {
+            $sum += $i;
+          }
+        }
+        return $sum;
+    }
+  }
+  if (isset($_REQUEST['submit'])) {
+    $first = $_REQUEST['first'];
+    $second = $_REQUEST['second'];
+    $select = $_REQUEST['select'];
+    $result = caculate($first, $second, $select);
+  }
+?>
+  <div style="width:600px;margin:auto">
+  <form method="get" action="">
+    從 <input name="first" type="text" size="4" value="<?php echo $first ?>" >
+    到 <input type="text" name="second"  size="4" value="<?php echo $second ?>">
+    之間的
+    <select name="select" size="1">
+      <option value="0" <?php if ($select == '0') echo 'selected'; ?>>和</option>
+      <option value="1" <?php if ($select == '1') echo 'selected'; ?>>奇數和</option>
+      <option value="2" <?php if ($select == '2') echo 'selected'; ?>>偶數和</option>
+    </select>
+    等於
+    <input name="result" type="text"  size="8" value="<?php echo $result ?>" readonly>
+    <input type="submit" name="submit" value="計算" />
+  </form>
+  </div>
+  </body>
+
+</html>

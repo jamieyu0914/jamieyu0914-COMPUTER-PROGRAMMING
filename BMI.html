@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <title>計算BMI</title>     
+    <meta charset="utf-8">
+  </head>
+       
+  <body>
+    <p style="text-align:center;font-size:24px;color:red">計算BMI</p>
+    <hr>
+    <div style="width:400px;margin:auto">
+      <form action="" method="get">
+        請輸入身高： <input type="text" name="height" value="<?php if (isset($_GET['height'])) echo ($_GET['height']); ?>"> 公分<br>
+        請輸入體重： <input type="text" name="weight" value="<?php if (isset($_GET['weight'])) echo ($_GET['weight']); ?>"> 公斤<br>
+        <input type="submit" name="submit" value="開始計算">
+      </form>
+    </div>
+<?php
+/*
+體重過輕 BMI ＜ 18.5
+正常範圍 18.5≦BMI＜24
+過重 24≦BMI
+*/
+  function bmi($height, $weight) {
+      $height = $height / 100;
+      $bmi = $weight / ($height * $height);
+      return $bmi;  
+  }
+  if (isset($_GET['submit'])) {
+    echo '<br><div style="width:400px;margin:auto">';
+    if (is_numeric($_GET['height']) && is_numeric($_GET['weight']) && $_GET['height'] > 0 && $_GET['weight'] > 0) {
+      $bmi = bmi($_GET['height'], $_GET['weight']);
+      $bmi = round($bmi, 1);
+      if ($bmi < 18.5) {
+        echo '<p style="color:red">您的BMI值為' . $bmi . ', 體重過輕, 要開始增肥了~~~</p>';
+      } else if ($bmi >= 18.5 && $bmi < 24) {
+        echo '<p style="color:blue">您的BMI值為' . $bmi . ', 體重正常, 請繼續保持~~~</p>';
+      } else {
+        echo '<p style="color:red">您的BMI值為' . $bmi . ', 體重過重, 要開始減肥了~~~</p?';    
+      }
+    } else {
+      echo "請輸入合理的值";
+    }
+    echo '</div>';   
+  }
+?>              
+  </body>
+</html>
